@@ -79,7 +79,7 @@ class StoryList {
     };
 
     const story = new Story(response.data.story);
-
+    SubmitForm(story);
     return story;
   }
 }
