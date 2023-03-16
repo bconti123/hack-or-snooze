@@ -24,7 +24,6 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    // Completed
     return new URL(this.url).host;
   }
 }
