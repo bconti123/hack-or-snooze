@@ -54,15 +54,20 @@ function putStoriesOnPage() {
 
 // Still working on Submit Form....
 
-function SubmitForm(story) {
-  return $(`
-  <li id="${story.storyId}">
-    <a href="${story.url}" target="a_blank" class="story-link">
-      ${story.title}
-    </a>
-    <small class="story-hostname">(${hostName})</small>
-    <small class="story-author">by ${story.author}</small>
-    <small class="story-user">posted by ${story.username}</small>
-  </li>
-`);
+async function SubmitForm(e) {
+  e.preventDefault();
+  // gather input values from submit form.
+  const author = $("#author").val();
+  const title = $("#title").val();
+  const url = $("#url").val();
+  const StoryData = {title, author, url };
+  
+  // Submit form to addStory.
+  const story = await storyList.addStory(currentUser, StoryData);
+  const $story = generateStoryMarkup(story);
+  $allStoriesList.prepend($story);
+
+  // reset it
+  $submitForm.trigger("reset");
 }
+$submitForm.on("submit", SubmitForm);
