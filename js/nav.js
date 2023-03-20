@@ -34,5 +34,24 @@ function updateNavOnLogin() {
   $navLogOut.show();
   $navUserProfile.text(`${currentUser.username}`).show();
   $navSubmit.show(); 
+  $navFavorite.show();
+}
+
+// Nav to Submit Form handle click
+function navSubmitForm(e) {
+  console.debug("navSubmitFormClick");
+  hidePageComponents();
+  $allStoriesList.show();
   $submitSection.show();
 }
+
+$navSubmit.on("click", navSubmitForm);
+
+// Nav to Favorite List Handle Click. Show Favorite List
+function navFavoriteClick(e) {
+  console.debug("NavFavoritesClick", e);
+  hidePageComponents();
+  FavoritesListOnPage();
+}
+
+$navFavorite.on("click", navFavoriteClick);
