@@ -31,6 +31,7 @@ console.debug("generateStoryMarkup", story);
         <small class="story-hostname">(${hostName})</small>
         <small class="story-author">by ${story.author}</small>
         <small class="story-user">posted by ${story.username}</small>
+        <button>X</button>
       </li>
     `);
 }
@@ -50,9 +51,6 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
-
-
-// Still working on Submit Form....
 
 async function SubmitForm(e) {
   e.preventDefault();
