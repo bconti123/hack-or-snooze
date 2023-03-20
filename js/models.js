@@ -73,7 +73,6 @@ class StoryList {
    */
 
   async addStory( user, { title, author, url } ) {
-    // UNIMPLEMENTED: complete this function!
     const token = user.loginToken;
     const response = await axios({
       method: 'POST',
@@ -86,6 +85,22 @@ class StoryList {
     user.ownStories.unshift(story);
 
     return story;
+  }
+
+  async removeStory(user, storyId) {
+    const token = user.loginToken;
+    await axios({
+      method: 'DELETE',
+      data: { token: `${token}` },
+      url: `${BASE_URL}/stories/${storyId}`,
+    });
+
+    // filter out story whose ID we will remove
+    this.stories = this.stories.filter(s => s.storyId !== storyId);
+
+    // Do same thing for the user's list of stories and favorites
+    user.ownStories = user.ownStories.filter(s => s.storyId !== storyId);
+    user.favorites = user.ownStories.filter(s => s.storyId !== storyId);
   }
 }
 

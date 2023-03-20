@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDelBtn = false) {
 console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
@@ -29,6 +29,7 @@ console.debug("generateStoryMarkup", story);
   return $(`
       <li id="${story.storyId}">
         <div>
+        ${showDelBtn ? getDeleteBtnHTML() : ""}
         ${showStar ? getStarHTML(story, currentUser) : "" }
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -38,6 +39,14 @@ console.debug("generateStoryMarkup", story);
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+
+// delete button HTML
+function getDeleteBtnHTML() {
+  return `
+        <span class="trash-can">
+          <i class="fas fa-trash-alt"></i>
+        </span>`;
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
@@ -70,9 +79,47 @@ async function SubmitForm(e) {
   $allStoriesList.prepend($story);
 
   // reset it
+  $submitForm.slide("slow");
   $submitForm.trigger("reset");
 }
 $submitForm.on("submit", SubmitForm);
+
+// List of user's own stories
+
+function putUserStoriesOnPage() {
+  console.debug("PutUserStoriesOnPage");
+
+  $ownStoriesList.empty();
+
+  if(currentUser.ownStories.length === 0) {
+    $ownStoriesList.append("<h5>No stories added by user yet!</h5>");
+  }
+  else {
+    for (let story of currentUser.ownStories) {
+      let $story = generateStoryMarkup(story, true);
+      $ownStoriesList.append($story);
+    }
+  }
+
+  $ownStoriesList.show();
+}
+
+// handle deleting a story
+
+async function deleteStory(e) {
+  console.debug("deleteStory");
+
+  const $closestLi = $(e.target).closest("li");
+  const storyId = $closestLi.attr("id");
+
+  await storyList.removeStory(currentUser, storyId);
+
+  // re-generate story list
+  await putStoriesOnPage();
+
+}
+
+$ownStoriesList.on("click", ".trash-can", deleteStory);
 
 // Make favorite/non-favorite star for story
 
