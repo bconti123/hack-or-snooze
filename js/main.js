@@ -14,6 +14,8 @@ const $ownStoriesList = $("#own-stories");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 
+const $navLeft = $("#navLeft");
+
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");

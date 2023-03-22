@@ -136,9 +136,9 @@ function getStarHTML(story, user) {
 
 function FavoritesListOnPage() {
   console.debug("FavoritesListOnPage");
-
+  
   $allFavoredList.empty();
-  $allFavoredList.append("<h3>Your Favorite List</h3>")
+
   if (currentUser.favorites.length === 0) {
     $allFavoredList.append("<h5>No Favorities added</h5>");
   }

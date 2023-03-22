@@ -36,6 +36,7 @@ function updateNavOnLogin() {
   $navSubmit.show(); 
   $navFavorite.show();
   $navOwnStories.show();
+  $navLeft.show();
 }
 
 // Nav to Submit Form handle click
