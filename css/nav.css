@@ -23,7 +23,5 @@ nav {
 }
 
 .nav-left {
-  width: 50%;
-  display: flex;
-  justify-content: space-around;
+  font-weight: bold;
 }
